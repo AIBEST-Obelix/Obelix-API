@@ -390,3 +390,5 @@ src/Aspire/Accounting.Api.Aspire.AppHost/appsettings.json
 [Uu]ploads/
 
 **/llama-4.json
+
+.idea/
