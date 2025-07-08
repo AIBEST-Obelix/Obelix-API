@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Contracts\" />
+      <Folder Include="Implementations\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Obelix.Api.Services.Identity.Data\Obelix.Api.Services.Identity.Data.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Identity.Shared\Obelix.Api.Services.Identity.Shared.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="14.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+    </ItemGroup>
+
+</Project>

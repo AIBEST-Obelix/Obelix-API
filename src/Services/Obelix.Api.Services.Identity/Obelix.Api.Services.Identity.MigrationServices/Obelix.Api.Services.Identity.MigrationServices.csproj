@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Obelix.Api.Services.Identity.MigrationServices-425e09b4-0ae8-418a-b59b-884803a10ef5</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.3.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3"/>
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="9.0.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Aspire\Obelix.Api.Aspire.ServiceDefaults\Obelix.Api.Aspire.ServiceDefaults.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Identity.Data\Obelix.Api.Services.Identity.Data.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Identity.Services\Obelix.Api.Services.Identity.Services.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Identity.Shared\Obelix.Api.Services.Identity.Shared.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Identity.WebHost\Obelix.Api.Services.Identity.WebHost.csproj" />
+    </ItemGroup>
+</Project>
