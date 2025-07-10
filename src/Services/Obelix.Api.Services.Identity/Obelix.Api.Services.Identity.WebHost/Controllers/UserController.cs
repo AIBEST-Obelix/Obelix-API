@@ -80,7 +80,7 @@ public class UserController : ControllerBase
 
         var user = await this.userService.GetUserByIdAsync(this.currentUser.UserId);
 
-        if (!await this.authService.CheckIsPasswordCorrectAsync(user!.UserName, updatePasswordModel.OldPassword))
+        if (!await this.authService.CheckIsPasswordCorrectAsync(user!.Email, updatePasswordModel.OldPassword))
         {
             this.logger.LogWarning("Changing password for admin with id {UserId} failed. Old password is incorrect.", this.currentUser.UserId);
 
@@ -100,7 +100,7 @@ public class UserController : ControllerBase
             return this.BadRequest(new ResponseModel
             {
                 Status = "password-change-failed",
-                Message = result.Errors.FirstOrDefault()?.Description,
+                Message = result.Errors.FirstOrDefault()?.Description!,
             });
         }
 
@@ -138,7 +138,7 @@ public class UserController : ControllerBase
             });
         }
 
-        var result = await this.userService.UpdateUserAsync(user.UserName, model);
+        var result = await this.userService.UpdateUserAsync(user.Email, model);
 
         if (!result)
         {
@@ -168,19 +168,6 @@ public class UserController : ControllerBase
     public async Task<ActionResult<IEnumerable<UserVM>>> GetAdminsAsync()
     {
         var result = await this.userService.GetAllAdminsAsync();
-
-        return this.Ok(result);
-    }
-    
-    /// <summary>
-    /// Gets all accountants.
-    /// </summary>
-    /// <returns>Response with the result.</returns>
-    [HttpGet("accountant")]
-    [Authorize(Policy = UserPolicies.AdminPermissions)]
-    public async Task<ActionResult<IEnumerable<UserVM>>> GetAccountantsAsync()
-    {
-        var result = await this.userService.GetAllAccountantsAsync();
 
         return this.Ok(result);
     }
@@ -234,7 +221,7 @@ public class UserController : ControllerBase
             return this.BadRequest(new ResponseModel
             {
                 Status = "delete-failed",
-                Message = result.Errors.FirstOrDefault()?.Description,
+                Message = result.Errors.FirstOrDefault()?.Description!,
             });
         }
 
@@ -246,4 +233,5 @@ public class UserController : ControllerBase
             Message = "User deleted successfully.",
         });
     }
+
 }

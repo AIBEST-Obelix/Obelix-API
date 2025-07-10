@@ -16,10 +16,11 @@
 
     <ItemGroup>
         <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.3.1" />
+        <PackageReference Include="Aspire.RabbitMQ.Client" Version="9.3.1" />
         <PackageReference Include="AutoMapper" Version="14.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.6" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -28,6 +29,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Aspire\Obelix.Api.Aspire.ServiceDefaults\Obelix.Api.Aspire.ServiceDefaults.csproj" />
+      <ProjectReference Include="..\..\..\EventBus\Obelix.Api.EventBus.RabbitMQ\Obelix.Api.EventBus.RabbitMQ.csproj" />
       <ProjectReference Include="..\..\..\EventBus\Obelix.Api.EventBus.Shared\Obelix.Api.EventBus.Shared.csproj" />
       <ProjectReference Include="..\Obelix.Api.Services.Identity.Data\Obelix.Api.Services.Identity.Data.csproj" />
       <ProjectReference Include="..\Obelix.Api.Services.Identity.Services\Obelix.Api.Services.Identity.Services.csproj" />

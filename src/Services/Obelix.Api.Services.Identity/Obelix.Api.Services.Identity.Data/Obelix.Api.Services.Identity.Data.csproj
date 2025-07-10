@@ -15,4 +15,8 @@
       <ProjectReference Include="..\..\Obelix.Api.Services.Shared\Obelix.Api.Services.Shared\Obelix.Api.Services.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 </Project>

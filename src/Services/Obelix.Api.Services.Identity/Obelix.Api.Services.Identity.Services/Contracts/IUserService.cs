@@ -67,19 +67,13 @@ public interface IUserService
     /// <summary>
     /// Gets all users.
     /// </summary>
-    /// <returns>A list of admins.</returns>
+    /// <returns>A list of users.</returns>
     Task<List<UserVM>> GetAllUsersAsync();
-    
-    /// <summary>
-    /// Gets all accountants.
-    /// </summary>
-    /// <returns>A list of accountants.</returns>
-    Task<List<UserVM>> GetAllAccountantsAsync();
 
     /// <summary>
     /// Gets all admins.
     /// </summary>
-    /// <returns>A list of accountants</returns>
+    /// <returns>A list of admins</returns>
     Task<List<UserVM>> GetAllAdminsAsync();
 
     /// <summary>

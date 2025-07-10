@@ -1,6 +1,9 @@
 using Obelix.Api.Services.Identity.Services.Contracts;
 using Obelix.Api.Services.Identity.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
+using Obelix.Api.EventBus.Abstraction.Abstractions;
+using Obelix.Api.EventBus.Shared.Services.Contracts;
+using Obelix.Api.EventBus.Shared.Services.Implementations;
 using Obelix.Api.Services.Identity.Services.Contracts;
 using Obelix.Api.Services.Identity.Services.Implementations;
 

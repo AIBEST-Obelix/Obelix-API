@@ -51,25 +51,25 @@ public class AuthController : ControllerBase
     /// <returns>Response with the result.</returns>
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] UserIM userIm)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginIM userIm)
     {
-        this.logger.LogInformation("User with username {UserName} is trying to login.", userIm.UserName);
+        this.logger.LogInformation("User with username {Email} is trying to login.", userIm.Email);
 
-        if (!await this.authService.CheckIfUserExistsAsync(userIm.UserName))
+        if (!await this.authService.CheckIfUserExistsAsync(userIm.Email))
         {
-            this.logger.LogWarning("User with username {UserName} does not exist.", userIm.UserName);
-            return this.BadRequest(new ResponseModel() { Status = "login-failed", Message = "Invalid Username." });
+            this.logger.LogWarning("User with username {Email} does not exist.", userIm.Email);
+            return this.BadRequest(new ResponseModel() { Status = "login-failed", Message = "Invalid Email." });
         }
         
-        if (!await this.authService.CheckIsPasswordCorrectAsync(userIm.UserName, userIm.Password))
+        if (!await this.authService.CheckIsPasswordCorrectAsync(userIm.Email, userIm.Password))
         {
-            this.logger.LogWarning("User with username {UserName} has entered an incorrect password.", userIm.UserName);
+            this.logger.LogWarning("User with username {Email} has entered an incorrect password.", userIm.Email);
             return this.BadRequest(new ResponseModel { Status = "login-failed", Message = "Invalid Password." });
         }
 
-        var tokens = await this.tokenService.CreateTokensForUserAsync(userIm.UserName);
+        var tokens = await this.tokenService.CreateTokensForUserAsync(userIm.Email);
 
-        this.logger.LogInformation("User with email {UserName} has logged in successfully.", userIm.UserName);
+        this.logger.LogInformation("User with email {Email} has logged in successfully.", userIm.Email);
 
         return this.Ok(new
         {
@@ -89,11 +89,11 @@ public class AuthController : ControllerBase
     [Route("register/admin")]
     public async Task<ActionResult<ResponseModel>> RegisterAsync([FromBody] UserIM userIm)
     {
-        this.logger.LogInformation("User with username {UserName} is trying to register as an admin.", userIm.UserName);
+        this.logger.LogInformation("User with username {Email} is trying to register as an admin.", userIm.Email);
 
-        if (await this.authService.CheckIfUserExistsAsync(userIm.UserName))
+        if (await this.authService.CheckIfUserExistsAsync(userIm.Email))
         {
-            this.logger.LogWarning("User with username {UserName} already exists.", userIm.UserName);
+            this.logger.LogWarning("User with username {Email} already exists.", userIm.Email);
             return this.Conflict(new ResponseModel { Status = "register-failed", Message = "User already exists." });
         }
 
@@ -101,11 +101,11 @@ public class AuthController : ControllerBase
 
         if (!response.Item1)
         {
-            this.logger.LogWarning("User with username {UserName} failed to register. Reason: {Reason}", userIm.UserName, response.Item2);
+            this.logger.LogWarning("User with username {Email} failed to register. Reason: {Reason}", userIm.Email, response.Item2);
             return this.BadRequest(new ResponseModel { Status = "register-failed", Message = response.Item2 });
         }
         
-        this.logger.LogInformation("User with username {UserName} has registered successfully.", userIm.UserName);
+        this.logger.LogInformation("User with username {Email} has registered successfully.", userIm.Email);
 
         return this.Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
     }
@@ -120,11 +120,11 @@ public class AuthController : ControllerBase
     [Route("register/user")]
     public async Task<ActionResult<ResponseModel>> RegisterUserAsync([FromBody] UserIM userIm)
     {
-        this.logger.LogInformation("User with username {UserName} is trying to register as a user.", userIm.UserName);
+        this.logger.LogInformation("User with username {Email} is trying to register as a user.", userIm.Email);
 
-        if (await this.authService.CheckIfUserExistsAsync(userIm.UserName))
+        if (await this.authService.CheckIfUserExistsAsync(userIm.Email))
         {
-            this.logger.LogWarning("User with username {UserName} already exists.", userIm.UserName);
+            this.logger.LogWarning("User with username {Email} already exists.", userIm.Email);
             return this.Conflict(new ResponseModel { Status = "register-failed", Message = "User already exists." });
         }
 
@@ -132,11 +132,11 @@ public class AuthController : ControllerBase
 
         if (!response.Item1)
         {
-            this.logger.LogWarning("User with username {UserName} failed to register as a user. Reason: {Reason}", userIm.UserName, response.Item2);
+            this.logger.LogWarning("User with username {Email} failed to register as a user. Reason: {Reason}", userIm.Email, response.Item2);
             return this.BadRequest(new ResponseModel { Status = "register-failed", Message = response.Item2 });
         }
         
-        this.logger.LogInformation("User with username {UserName} has registered as a user successfully.", userIm.UserName);
+        this.logger.LogInformation("User with username {Email} has registered as a user successfully.", userIm.Email);
 
         return this.Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
     }

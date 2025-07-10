@@ -30,13 +30,6 @@ public interface IAuthService
     Task<Tuple<bool, string?>> CreateUserAsync(UserIM userIm);
     
     /// <summary>
-    /// Saves accountant to the database.
-    /// </summary>
-    /// <param name="userIm">User info.</param>
-    /// <returns>Is creating successful.</returns>
-    Task<Tuple<bool, string?>> CreateAccountantAsync(UserIM userIm);
-    
-    /// <summary>
     /// Saves admin to the database.
     /// </summary>
     /// <param name="userIm">Admin info.</param>

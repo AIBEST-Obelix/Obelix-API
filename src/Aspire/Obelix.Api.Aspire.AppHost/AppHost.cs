@@ -18,17 +18,17 @@ var rabbitMq = builder.AddRabbitMQ(
     .WithManagementPlugin();
 
 // Migration services
-builder.AddProject<Projects.Obelix_Api_Services_Identity_MigrationServices>("identity-migration-service")
+var migrationService = builder.AddProject<Projects.Obelix_Api_Services_Identity_MigrationServices>("identity-migration-service")
     .WithReference(identityDb)
     .WithEnvironment("SuperAdmin");
-
 
 // Services
 var identityService = builder
     .AddProject<Projects.Obelix_Api_Services_Identity_WebHost>("identity-service")
     .WithReference(identityDb)
     .WithReference(rabbitMq)
-    .WithEnvironment("JWT");
+    .WithEnvironment("JWT")
+    .WaitFor(migrationService);
 
 builder
     .AddProject<Projects.Obelix_Api_Gateway_WebHost>("api-gateway")
