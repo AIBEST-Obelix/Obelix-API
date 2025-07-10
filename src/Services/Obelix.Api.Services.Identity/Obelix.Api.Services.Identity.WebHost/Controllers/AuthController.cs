@@ -111,43 +111,12 @@ public class AuthController : ControllerBase
     }
     
     /// <summary>
-    /// Register an accountant.
-    /// </summary>
-    /// <param name="userIm">Register model.</param>
-    /// <returns>Response with the result.</returns>
-    [HttpPost]
-    [Authorize(Roles = UserRoles.Admin)]
-    [Route("register/accountant")]
-    public async Task<ActionResult<ResponseModel>> RegisterAccountantAsync([FromBody] UserIM userIm)
-    {
-        this.logger.LogInformation("User with username {UserName} is trying to register as a accountant.", userIm.UserName);
-
-        if (await this.authService.CheckIfUserExistsAsync(userIm.UserName))
-        {
-            this.logger.LogWarning("User with username {UserName} already exists.", userIm.UserName);
-            return this.Conflict(new ResponseModel { Status = "register-failed", Message = "User already exists." });
-        }
-
-        var response = await this.authService.CreateAccountantAsync(userIm);
-
-        if (!response.Item1)
-        {
-            this.logger.LogWarning("User with username {UserName} failed to register as an accountant. Reason: {Reason}", userIm.UserName, response.Item2);
-            return this.BadRequest(new ResponseModel { Status = "register-failed", Message = response.Item2 });
-        }
-        
-        this.logger.LogInformation("User with username {UserName} has registered as a accountant successfully.", userIm.UserName);
-
-        return this.Ok(new ResponseModel { Status = "Success", Message = "User created successfully!" });
-    }
-    
-    /// <summary>
     /// Registers a user.
     /// </summary>
     /// <param name="userIm">User model.</param>
     /// <returns>Response with the result.</returns>
     [HttpPost]
-    [Authorize(UserPolicies.AdminPermissions)]
+    [AllowAnonymous]
     [Route("register/user")]
     public async Task<ActionResult<ResponseModel>> RegisterUserAsync([FromBody] UserIM userIm)
     {
