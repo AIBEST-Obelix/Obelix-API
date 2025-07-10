@@ -1,7 +1,7 @@
 using Obelix.Api.Services.Identity.Services;
 using Obelix.Api.Services.Identity.Data.Data;
 using Obelix.Api.Services.Identity.Data.Models.Identity;
-using Obelix.Api.Services.Identity.MigrationService;
+using Obelix.Api.Services.Identity.MigrationServices;
 using Obelix.Api.Services.Identity.Services;
 using Obelix.Api.Services.Identity.WebHost.Profiles;
 using Microsoft.AspNetCore.Identity;

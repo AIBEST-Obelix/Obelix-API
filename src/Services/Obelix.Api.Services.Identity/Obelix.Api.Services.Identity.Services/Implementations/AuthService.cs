@@ -73,19 +73,20 @@ internal class AuthService : IAuthService
     /// <inheritdoc/>
     public async Task<Tuple<bool, string?>> CreateAdminAsync(UserIM userIm)
     {
-        User admin = new ()
+        User admin = new()
         {
             SecurityStamp = Guid.NewGuid().ToString(),
             UserName = userIm.Email,
+            Email = userIm.Email
         };
 
         var result = await this.userManager.CreateAsync(admin, userIm.Password);
 
         if (!result.Succeeded)
         {
-            return new (false, result.Errors.FirstOrDefault()?.Description);
+            return new(false, result.Errors.FirstOrDefault()?.Description);
         }
-        
+
         if (!await this.roleManager.RoleExistsAsync(UserRoles.Admin))
         {
             await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
@@ -96,35 +97,6 @@ internal class AuthService : IAuthService
             await this.userManager.AddToRoleAsync(admin, UserRoles.Admin);
         }
 
-        return new (true, null);
-    }
-
-    /// <inheritdoc/>
-    public async Task<Tuple<bool, string?>> CreateAccountantAsync(UserIM userIm)
-    {
-        User accountant = new ()
-        {
-            SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = userIm.Email,
-        };
-
-        var result = await this.userManager.CreateAsync(accountant, userIm.Password);
-
-        if (!result.Succeeded)
-        {
-            return new (false, result.Errors.FirstOrDefault()?.Description);
-        }
-        
-        if (!await this.roleManager.RoleExistsAsync(UserRoles.Accountant))
-        {
-            await this.roleManager.CreateAsync(new IdentityRole(UserRoles.Accountant));
-        }
-
-        if (await this.roleManager.RoleExistsAsync(UserRoles.Accountant))
-        {
-            await this.userManager.AddToRoleAsync(accountant, UserRoles.Accountant);
-        }
-
-        return new (true, null);
+        return new(true, null);
     }
 }

@@ -12,12 +12,6 @@ public static class UserRoles
     public const string Admin = "Admin";
     
     /// <summary>
-    /// Represents the role for accountants. Users with this role have access to administrative features
-    /// for a specific company, such as viewing analytics and sales of products.
-    /// </summary>
-    public const string Accountant = "Accountant";
-    
-    /// <summary>
     /// Represents the general user role. Users with this role have access to general features of the application
     /// that do not require account or administrative privileges.
     /// </summary>

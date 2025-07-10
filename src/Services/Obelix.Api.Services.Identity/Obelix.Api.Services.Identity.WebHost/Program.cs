@@ -13,7 +13,9 @@ using Obelix.Api.Services.Shared.Data.Models.Identity;
 // using Obelix.Api.Services.Shared.IntegrationEvent;
 // using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Obelix.Api.EventBus.RabbitMQ;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -58,15 +60,13 @@ builder.Services
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(UserPolicies.UserPermissions, policy =>
-        policy.RequireRole(UserRoles.User)); 
-    options.AddPolicy(UserPolicies.AccountantPermissions, policy =>
-        policy.RequireRole(UserRoles.Accountant));
+        policy.RequireRole(UserRoles.User));
     options.AddPolicy(UserPolicies.AdminPermissions, policy =>
         policy.RequireRole(UserRoles.Admin));
     options.AddPolicy(UserPolicies.NormalPermissions, policy => 
-        policy.RequireRole(UserRoles.User, UserRoles.Accountant));
+        policy.RequireRole(UserRoles.User));
     options.AddPolicy(UserPolicies.ElevatedPermissions, policy => 
-        policy.RequireRole(UserRoles.Accountant, UserRoles.Admin));
+        policy.RequireRole(UserRoles.Admin));
 });
 
 builder.Services.AddControllers();
@@ -77,8 +77,9 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
-var app = builder.Build();
+builder.AddRabbitMqEventBus("Obelix-eventbus");
 
+var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
@@ -91,9 +92,6 @@ else
 {
     app.UseHttpsRedirection();
 }
-
-///app.UseSwagger();
-///app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();

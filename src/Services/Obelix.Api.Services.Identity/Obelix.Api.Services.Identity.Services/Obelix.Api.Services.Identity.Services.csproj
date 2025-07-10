@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\EventBus\Obelix.Api.EventBus.Shared\Obelix.Api.EventBus.Shared.csproj" />
       <ProjectReference Include="..\Obelix.Api.Services.Identity.Data\Obelix.Api.Services.Identity.Data.csproj" />
       <ProjectReference Include="..\Obelix.Api.Services.Identity.Shared\Obelix.Api.Services.Identity.Shared.csproj" />
     </ItemGroup>

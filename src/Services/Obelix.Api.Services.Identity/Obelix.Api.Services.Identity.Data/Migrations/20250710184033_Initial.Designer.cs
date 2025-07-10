@@ -12,7 +12,7 @@ using Obelix.Api.Services.Identity.Data.Data;
 namespace Obelix.Api.Services.Identity.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250708170100_Initial")]
+    [Migration("20250710184033_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Obelix.Api.Services.Identity.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("ProductVersion", "9.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);

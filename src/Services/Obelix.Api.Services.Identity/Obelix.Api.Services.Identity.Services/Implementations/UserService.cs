@@ -109,14 +109,6 @@ internal class UserService : IUserService
     }
     
     /// <inheritdoc/>
-    public async Task<List<UserVM>> GetAllAccountantsAsync()
-    {
-        var accountants = await this.userManager.GetUsersInRoleAsync(UserRoles.Accountant);
-
-        return accountants.Select(user => this.mapper.Map<UserVM>(user)).ToList();
-    }
-    
-    /// <inheritdoc/>
     public async Task<List<UserVM>> GetAllUsersAsync()
     {
         var users = await this.userManager.GetUsersInRoleAsync(UserRoles.User);

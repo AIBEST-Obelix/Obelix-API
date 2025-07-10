@@ -100,7 +100,7 @@ public class UserController : ControllerBase
             return this.BadRequest(new ResponseModel
             {
                 Status = "password-change-failed",
-                Message = result.Errors.FirstOrDefault()?.Description,
+                Message = result.Errors.FirstOrDefault()?.Description!,
             });
         }
 
@@ -173,19 +173,6 @@ public class UserController : ControllerBase
     }
     
     /// <summary>
-    /// Gets all accountants.
-    /// </summary>
-    /// <returns>Response with the result.</returns>
-    [HttpGet("accountant")]
-    [Authorize(Policy = UserPolicies.AdminPermissions)]
-    public async Task<ActionResult<IEnumerable<UserVM>>> GetAccountantsAsync()
-    {
-        var result = await this.userService.GetAllAccountantsAsync();
-
-        return this.Ok(result);
-    }
-    
-    /// <summary>
     /// Gets all users.
     /// </summary>
     /// <returns>Response with the result.</returns>
@@ -234,7 +221,7 @@ public class UserController : ControllerBase
             return this.BadRequest(new ResponseModel
             {
                 Status = "delete-failed",
-                Message = result.Errors.FirstOrDefault()?.Description,
+                Message = result.Errors.FirstOrDefault()?.Description!,
             });
         }
 

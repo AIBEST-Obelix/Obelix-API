@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using OpenTelemetry.Trace;
 
-namespace Obelix.Api.Services.Identity.MigrationService;
+namespace Obelix.Api.Services.Identity.MigrationServices;
 
 public class Worker(
     IServiceProvider serviceProvider,
@@ -80,15 +80,5 @@ public class Worker(
             };
             await authService.CreateAdminAsync(admin);
         }
-        /*
-       var strategy = dbContext.Database.CreateExecutionStrategy();
-       await strategy.ExecuteAsync(async () =>
-       {
-           // Seed the database
-           await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
-           await dbContext.Tickets.AddAsync(firstTicket, cancellationToken);
-           await dbContext.SaveChangesAsync(cancellationToken);
-           await transaction.CommitAsync(cancellationToken);
-       });*/
     }
 }

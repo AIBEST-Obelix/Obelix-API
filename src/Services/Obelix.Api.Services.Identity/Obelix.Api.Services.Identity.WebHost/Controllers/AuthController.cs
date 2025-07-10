@@ -51,14 +51,14 @@ public class AuthController : ControllerBase
     /// <returns>Response with the result.</returns>
     [HttpPost]
     [Route("login")]
-    public async Task<IActionResult> LoginAsync([FromBody] UserIM userIm)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginIM userIm)
     {
         this.logger.LogInformation("User with username {Email} is trying to login.", userIm.Email);
 
         if (!await this.authService.CheckIfUserExistsAsync(userIm.Email))
         {
             this.logger.LogWarning("User with username {Email} does not exist.", userIm.Email);
-            return this.BadRequest(new ResponseModel() { Status = "login-failed", Message = "Invalid Username." });
+            return this.BadRequest(new ResponseModel() { Status = "login-failed", Message = "Invalid Email." });
         }
         
         if (!await this.authService.CheckIsPasswordCorrectAsync(userIm.Email, userIm.Password))
