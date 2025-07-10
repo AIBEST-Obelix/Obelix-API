@@ -13,7 +13,7 @@ public class UserCompanyVM
     public string Id { get; set; } = string.Empty;
 
     /// <summary>
-    /// Gets or sets the username of the admin.
+    /// Gets or sets the email of the admin.
     /// </summary>
     [Display(Name = "Email")]
     public string UserName { get; set; } = string.Empty;

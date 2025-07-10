@@ -92,6 +92,8 @@ else
     app.UseHttpsRedirection();
 }
 
+///app.UseSwagger();
+///app.UseSwaggerUI();
 
 app.UseAuthentication();
 app.UseAuthorization();

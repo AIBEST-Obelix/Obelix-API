@@ -8,11 +8,11 @@ namespace Obelix.Api.Services.Identity.Shared.Models.User;
 public class UserUM
 {
     /// <summary>
-    /// Gets or sets the username of the User.
+    /// Gets or sets the email of the User.
     /// </summary>
-    [Required(ErrorMessage = "Username is required")]
-    [RegularExpression(@"^(?=.{5,20}$)(?!.*\.\.)([a-zA-Z0-9]+\.)*[a-zA-Z0-9]+$", ErrorMessage = "Username is not in the correct format")]
-    [Display(Name = "Username")]
+    [Required(ErrorMessage = "Email is required")]
+    [EmailAddress(ErrorMessage = "Email is not in a valid format")]
+    [Display(Name = "Email")]
     public string UserName { get; set; } = string.Empty;
     
     /// <summary>
