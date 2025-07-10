@@ -80,7 +80,7 @@ public class UserController : ControllerBase
 
         var user = await this.userService.GetUserByIdAsync(this.currentUser.UserId);
 
-        if (!await this.authService.CheckIsPasswordCorrectAsync(user!.UserName, updatePasswordModel.OldPassword))
+        if (!await this.authService.CheckIsPasswordCorrectAsync(user!.Email, updatePasswordModel.OldPassword))
         {
             this.logger.LogWarning("Changing password for admin with id {UserId} failed. Old password is incorrect.", this.currentUser.UserId);
 
@@ -138,7 +138,7 @@ public class UserController : ControllerBase
             });
         }
 
-        var result = await this.userService.UpdateUserAsync(user.UserName, model);
+        var result = await this.userService.UpdateUserAsync(user.Email, model);
 
         if (!result)
         {
@@ -246,4 +246,5 @@ public class UserController : ControllerBase
             Message = "User deleted successfully.",
         });
     }
+
 }

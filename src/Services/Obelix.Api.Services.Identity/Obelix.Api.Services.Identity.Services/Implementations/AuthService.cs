@@ -47,7 +47,7 @@ internal class AuthService : IAuthService
         User user = new ()
         {
             SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = userIm.UserName,
+            UserName = userIm.Email,
         };
 
         var result = await this.userManager.CreateAsync(user, userIm.Password);
@@ -76,7 +76,7 @@ internal class AuthService : IAuthService
         User admin = new ()
         {
             SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = userIm.UserName,
+            UserName = userIm.Email,
         };
 
         var result = await this.userManager.CreateAsync(admin, userIm.Password);
@@ -105,7 +105,7 @@ internal class AuthService : IAuthService
         User accountant = new ()
         {
             SecurityStamp = Guid.NewGuid().ToString(),
-            UserName = userIm.UserName,
+            UserName = userIm.Email,
         };
 
         var result = await this.userManager.CreateAsync(accountant, userIm.Password);

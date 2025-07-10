@@ -75,7 +75,7 @@ public class Worker(
         {
             UserIM admin = new()
             {
-                UserName = configuration.GetValue<string>("SuperAdmin:Username"),
+                Email = configuration.GetValue<string>("SuperAdmin:Username"),
                 Password = configuration.GetValue<string>("SuperAdmin:Password"),
             };
             await authService.CreateAdminAsync(admin);
