@@ -1,5 +1,7 @@
-﻿using Obelix.Api.Services.Shared.Data.Interfaces;
+using Obelix.Api.Services.Shared.Data.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Obelix.Api.Services.Identity.Data.Models.Identity;
 
@@ -12,4 +14,19 @@ public class User : IdentityUser, ISoftDelete
     /// Gets or sets a value indicating whether the user is deleted.
     /// </summary>
     public bool IsDeleted { get; set; } = false;
+
+    /// <summary>
+    /// Gets or sets the first name of the user.
+    /// </summary>
+    [MaxLength(100)]
+    public string FirstName { get; set; }
+
+    /// <summary>
+    /// Gets or sets the last name of the user.
+    /// </summary>
+    [MaxLength(100)]
+    public string LastName { get; set; }
+
+    // Email come to IdentityUser:
+    // public string Email { get; set; }
 }
