@@ -13,26 +13,26 @@ namespace Obelix.Api.Services.Items.WebHost.Controllers;
 /// <summary>
 /// Controller for managing item-related operations.
 /// </summary>
-[Microsoft.AspNetCore.Components.Route("[controller]")]
+[Route("[controller]")]
 [ApiController]
 [Authorize]
-public class ItemController : ControllerBase
+public class ItemsController : ControllerBase
 {
-    private readonly ILogger<ItemController> logger;
+    private readonly ILogger<ItemsController> logger;
     private readonly IItemService itemService;
     private readonly IItemFileService itemFileService;
     private readonly IHubContext<ItemHub> itemHubContext;
     private readonly string AESKey;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ItemController"/> class.
+    /// Initializes a new instance of the <see cref="ItemsController"/> class.
     /// </summary>
-    public ItemController(
+    public ItemsController(
         IConfiguration configuration,
         IItemService itemService,
         IItemFileService itemFileService,
         IHubContext<ItemHub> itemHubContext,
-        ILogger<ItemController> logger)
+        ILogger<ItemsController> logger)
     {
         this.itemService = itemService;
         this.itemFileService = itemFileService;

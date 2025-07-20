@@ -20,6 +20,8 @@
       <ProjectReference Include="..\..\Gateway\Obelix.Api.Gateway.WebHost\Obelix.Api.Gateway.WebHost.csproj" />
       <ProjectReference Include="..\..\Services\Obelix.Api.Services.Identity\Obelix.Api.Services.Identity.MigrationServices\Obelix.Api.Services.Identity.MigrationServices.csproj" />
       <ProjectReference Include="..\..\Services\Obelix.Api.Services.Identity\Obelix.Api.Services.Identity.WebHost\Obelix.Api.Services.Identity.WebHost.csproj" />
+      <ProjectReference Include="..\..\Services\Obelix.Api.Services.Items\Obelix.Api.Services.Items.MigrationServices\Obelix.Api.Services.Items.MigrationServices.csproj" />
+      <ProjectReference Include="..\..\Services\Obelix.Api.Services.Items\Obelix.Api.Services.Items.WebHost\Obelix.Api.Services.Items.WebHost.csproj" />
     </ItemGroup>
 
 </Project>

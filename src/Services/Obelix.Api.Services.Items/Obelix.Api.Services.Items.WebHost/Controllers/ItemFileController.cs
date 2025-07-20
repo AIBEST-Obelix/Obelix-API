@@ -6,17 +6,23 @@ using Obelix.Api.Services.Items.Services.Contracts;
 
 namespace Obelix.Api.Services.Items.WebHost.Controllers;
 
-public class ItemFileController : ControllerBase
+/// <summary>
+/// Controller for managing item file-related operations.
+/// </summary>
+[Route("[controller]")]
+[ApiController]
+[Authorize]
+public class ItemsFileController : ControllerBase
 {
     private readonly IItemFileService itemFileService;
     private readonly IFileService fileService;
     private readonly IItemService itemService;
-    private readonly ILogger<ItemFileController> logger;
+    private readonly ILogger<ItemsFileController> logger;
     private readonly ICurrentUser currentUser;
     private readonly string AESKey;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ItemFileController"/> class.
+    /// Initializes a new instance of the <see cref="ItemsFileController"/> class.
     /// </summary>
     /// <param name="itemFileService">Item file service</param>
     /// <param name="fileService">File service</param>
@@ -24,12 +30,12 @@ public class ItemFileController : ControllerBase
     /// <param name="itemService">Item service</param>
     /// <param name="logger">Logger</param>
     /// <param name="currentUser">Current user</param>
-    public ItemFileController(
+    public ItemsFileController(
         IItemFileService itemFileService,
         IFileService fileService,
         IConfiguration configuration,
         IItemService itemService,
-        ILogger<ItemFileController> logger,
+        ILogger<ItemsFileController> logger,
         ICurrentUser currentUser)
     {
         this.itemFileService = itemFileService;

@@ -62,6 +62,7 @@ builder.Services.AddSwagger();
 builder.Services.AddServices();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddAutoMapper(typeof(MappingProfile));
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
