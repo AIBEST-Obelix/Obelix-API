@@ -1,0 +1,6 @@
+@Obelix.Api.Services.Items.WebHost_HostAddress = http://localhost:5182
+
+GET {{Obelix.Api.Services.Items.WebHost_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
