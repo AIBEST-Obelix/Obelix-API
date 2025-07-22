@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="14.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="3.1.8" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\EventBus\Obelix.Api.EventBus.Abstraction\Obelix.Api.EventBus.Abstraction.csproj" />
+      <ProjectReference Include="..\..\..\EventBus\Obelix.Api.EventBus.Shared\Obelix.Api.EventBus.Shared.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Items.Data\Obelix.Api.Services.Items.Data.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Items.Shared\Obelix.Api.Services.Items.Shared.csproj" />
+    </ItemGroup>
+
+</Project>
