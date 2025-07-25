@@ -39,4 +39,8 @@ public class Item : ISoftDelete
     /// </summary>
     public bool IsDeleted { get; set; }
     
+    /// <summary>
+    /// The date and time when the item was created.
+    /// </summary>
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }
