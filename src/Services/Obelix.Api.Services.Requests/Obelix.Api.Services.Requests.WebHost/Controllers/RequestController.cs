@@ -4,6 +4,7 @@ using Obelix.Api.Services.Requests.Services.Contracts;
 using Obelix.Api.Services.Requests.Shared.Models;
 using Obelix.Api.Services.Shared.Data.Models.Identity;
 using System.Net.Mime;
+using Obelix.Api.Services.Items.Services.Contracts;
 
 namespace Obelix.Api.Services.Requests.WebHost.Controllers;
 
@@ -17,19 +18,43 @@ public class RequestController : ControllerBase
 {
     private readonly ILogger<RequestController> logger;
     private readonly IRequestService requestService;
+<<<<<<< Updated upstream
     private readonly IItemService itemService;
+=======
+<<<<<<< Updated upstream
+=======
+    private readonly IItemService itemService;
+    private readonly ICurrentUser currentUser;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequestController"/> class.
     /// </summary>
     public RequestController(
         IRequestService requestService,
+<<<<<<< Updated upstream
         IItemService itemService,
+=======
+<<<<<<< Updated upstream
+=======
+        IItemService itemService,
+        ICurrentUser currentUser,
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         ILogger<RequestController> logger)
     {
         this.requestService = requestService;
         this.logger = logger;
+<<<<<<< Updated upstream
         this.itemService = itemService;
+=======
+<<<<<<< Updated upstream
+=======
+        this.itemService = itemService;
+        this.currentUser = currentUser;
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
 
     /// <summary>
@@ -169,9 +194,16 @@ public class RequestController : ControllerBase
     /// </summary>
     /// <param name="requestIM">The request to create.</param>
     /// <returns>The created request.</returns>
+    [Authorize(Policy = UserPolicies.UserPermissions)]
     [HttpPost]
     public async Task<IActionResult> CreateRequestAsync([FromBody] RequestIM requestIM)
     {
+
+        if (currentUser.UserRole == UserRoles.User)
+        {
+            requestIM.UserId = currentUser.UserId;
+        }
+        
         if (requestIM == null)
         {
             return BadRequest(new { Message = "Request data is required." });
@@ -180,7 +212,7 @@ public class RequestController : ControllerBase
         try
         {
             var createdRequest = await this.requestService.CreateRequestAsync(requestIM);
-            return CreatedAtAction(nameof(GetRequestByIdAsync), new { id = createdRequest.Id }, createdRequest);
+            return Ok(createdRequest);
         }
         catch (ArgumentNullException ex)
         {

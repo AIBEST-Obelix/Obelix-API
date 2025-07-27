@@ -17,5 +17,6 @@ public class MappingProfile : Profile
         this.CreateMap<Request, RequestVM>();
         this.CreateMap<RequestVM, Request>();
         this.CreateMap<Request, RequestIM>();
+        this.CreateMap<RequestIM, Request>();
     }
 }

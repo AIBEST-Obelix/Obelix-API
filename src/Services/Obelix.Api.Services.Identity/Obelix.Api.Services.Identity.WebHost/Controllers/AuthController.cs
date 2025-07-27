@@ -6,6 +6,7 @@ using Obelix.Api.Services.Identity.Shared.Models.User;
 using Obelix.Api.Services.Shared.Data.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Obelix.Api.Services.Shared.IntegrationEvent;
 
 namespace Obelix.Api.Services.Identity.WebHost.Controllers;
 
@@ -116,7 +117,6 @@ public class AuthController : ControllerBase
     /// <param name="userIm">User model.</param>
     /// <returns>Response with the result.</returns>
     [HttpPost]
-    [AllowAnonymous]
     [Route("register/user")]
     public async Task<ActionResult<ResponseModel>> RegisterUserAsync([FromBody] UserIM userIm)
     {

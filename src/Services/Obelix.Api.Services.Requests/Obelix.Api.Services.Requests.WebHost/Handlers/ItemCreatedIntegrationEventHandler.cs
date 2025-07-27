@@ -38,7 +38,7 @@ public class ItemCreatedIntegrationEventHandler : IIntegrationEventHandler<ItemC
         {
             await this.itemService.CreateItemAsync(@event.ItemId, @event.Name, @event.IsDeleted);
             
-            this.logger.LogInformation("Created item with id {ItemId}, name {Name}, isDeleted {IsDeleted}", @event.ItemId, $"{@event.Name} {@event.IsDeleted}");
+            this.logger.LogInformation("Created item with id {ItemId}, name {Name}, isDeleted {IsDeleted}", @event.ItemId, @event.Name, @event.IsDeleted);
         }
         catch (Exception ex)
         {
