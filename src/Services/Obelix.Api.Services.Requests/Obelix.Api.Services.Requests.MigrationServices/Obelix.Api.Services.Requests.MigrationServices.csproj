@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Obelix.Api.Services.Requests.MigrationServices-4f93db93-236e-4583-ae17-a33c7958b654</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.3.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.7" />
+        <PackageReference Include="OpenTelemetry" Version="1.12.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\Aspire\Obelix.Api.Aspire.ServiceDefaults\Obelix.Api.Aspire.ServiceDefaults.csproj" />
+      <ProjectReference Include="..\Obelix.Api.Services.Requests.Data\Obelix.Api.Services.Requests.Data.csproj" />
+    </ItemGroup>
+</Project>

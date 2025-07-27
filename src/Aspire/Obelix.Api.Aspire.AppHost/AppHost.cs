@@ -14,6 +14,10 @@ var itemsDb = builder.AddPostgres("items-db-server", password: rabbitMqPassword)
     .WithDataVolume()
     .AddDatabase("items-db");
 
+var requestsDb = builder.AddPostgres("requests-db-server", password: rabbitMqPassword)
+    .WithDataVolume()
+    .AddDatabase("requests-db");
+
 var rabbitMq = builder.AddRabbitMQ(
         "Obelix-eventbus",
         rabbitMqUsername,
@@ -29,6 +33,10 @@ var identityMigrationService = builder.AddProject<Projects.Obelix_Api_Services_I
 var itemsMigrationService = builder
     .AddProject<Projects.Obelix_Api_Services_Items_MigrationServices>("items-migration-service")
     .WithReference(itemsDb);
+
+var requestsMigrationService = builder
+    .AddProject<Projects.Obelix_Api_Services_Requests_MigrationServices>("requests-migration-service")
+    .WithReference(requestsDb);
 
 // Services
 var identityService = builder
@@ -46,6 +54,15 @@ var itemsService = builder
     .WithEnvironment("JWT")
     .WithExternalHttpEndpoints()
     .WaitFor(itemsMigrationService);
+
+var requestsService = builder
+    .AddProject<Projects.Obelix_Api_Services_Requests_WebHost>("requests-service")
+    .WithReference(identityService)
+    .WithReference(itemsService)
+    .WithReference(rabbitMq)
+    .WithEnvironment("JWT")
+    .WithExternalHttpEndpoints()
+    .WaitFor(requestsMigrationService);
 
 builder
     .AddProject<Projects.Obelix_Api_Gateway_WebHost>("api-gateway")

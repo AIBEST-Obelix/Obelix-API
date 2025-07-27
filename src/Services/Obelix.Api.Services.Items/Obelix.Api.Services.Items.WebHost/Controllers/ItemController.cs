@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Obelix.Api.EventBus.Shared.Services.Contracts;
 using Obelix.Api.Services.Items.Services.Contracts;
 using Obelix.Api.Services.Items.Shared.Models;
 using Obelix.Api.Services.Items.WebHost.Hubs;
 using Obelix.Api.Services.Shared.Data.Models.Identity;
+using Obelix.Api.Services.Shared.IntegrationEvent;
 using OpenTelemetry.Trace;
 
 namespace Obelix.Api.Services.Items.WebHost.Controllers;
@@ -22,6 +24,7 @@ public class ItemsController : ControllerBase
     private readonly IItemService itemService;
     private readonly IItemFileService itemFileService;
     private readonly IHubContext<ItemHub> itemHubContext;
+    private readonly IIntegrationEventService eventService;
     private readonly string AESKey;
 
     /// <summary>
@@ -32,11 +35,14 @@ public class ItemsController : ControllerBase
         IItemService itemService,
         IItemFileService itemFileService,
         IHubContext<ItemHub> itemHubContext,
+        IIntegrationEventService eventService,
         ILogger<ItemsController> logger)
     {
         this.itemService = itemService;
         this.itemFileService = itemFileService;
         this.logger = logger;
+        this.itemHubContext = itemHubContext;
+        this.eventService = eventService;
         this.AESKey = configuration["Encryption:AESKey"] ?? throw new InvalidOperationException("AES Key is not configured.");
     }
     
@@ -120,10 +126,6 @@ public class ItemsController : ControllerBase
             {
                 try
                 {
-                    
-<<<<<<< Updated upstream
-                    var result = await itemService.AnalyzeItemAsync(itemAnalyzeIM.Files);
-=======
                     var result = await itemService.AnalyzeItemAsync(files);
 
                     var @event = new ItemCreatedIntegrationEvent(
@@ -133,7 +135,6 @@ public class ItemsController : ControllerBase
                     );
 
                     await this.eventService.PublishThroughEventBusAsync(@event);
->>>>>>> Stashed changes
                     
                     await this.itemService.UpdateItemAsync(new ItemIM
                     {

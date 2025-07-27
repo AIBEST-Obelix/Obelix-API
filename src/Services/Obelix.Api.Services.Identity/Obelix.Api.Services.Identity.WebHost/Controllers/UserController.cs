@@ -164,7 +164,8 @@ public class UserController : ControllerBase
     /// </summary>
     /// <returns>Response with the result.</returns>
     [HttpGet("admin")]
-    [Authorize(Policy = UserPolicies.AdminPermissions)]
+    // [Authorize(Policy = UserPolicies.AdminPermissions)]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<UserVM>>> GetAdminsAsync()
     {
         var result = await this.userService.GetAllAdminsAsync();

@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Obelix.Api.Services.Identity.MigrationServices;
+using Obelix.Api.Services.Items.MigrationServices;
 using Obelix.Api.Services.Items.Data.Data;
 
 

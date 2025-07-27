@@ -2,7 +2,7 @@ using AutoMapper;
 using Obelix.Api.Services.Items.Data.Models;
 using Obelix.Api.Services.Items.Shared.Models;
 
-namespace Obelix.Api.Services.Identity.WebHost.Profiles;
+namespace Obelix.Api.Services.Items.WebHost.Profiles;
 
 /// <summary>
 /// Mapping profile.
