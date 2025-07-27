@@ -392,3 +392,5 @@ src/Aspire/Accounting.Api.Aspire.AppHost/appsettings.json
 **/llama-4.json
 
 .idea/
+
+.venv/

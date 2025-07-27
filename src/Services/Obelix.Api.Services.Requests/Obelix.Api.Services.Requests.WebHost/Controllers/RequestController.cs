@@ -17,16 +17,19 @@ public class RequestController : ControllerBase
 {
     private readonly ILogger<RequestController> logger;
     private readonly IRequestService requestService;
+    private readonly IItemService itemService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RequestController"/> class.
     /// </summary>
     public RequestController(
         IRequestService requestService,
+        IItemService itemService,
         ILogger<RequestController> logger)
     {
         this.requestService = requestService;
         this.logger = logger;
+        this.itemService = itemService;
     }
 
     /// <summary>
@@ -377,6 +380,27 @@ public class RequestController : ControllerBase
         catch (Exception ex)
         {
             this.logger.LogError(ex, "An error occurred while marking request as returned: {Id}", id);
+            return StatusCode(500, new { Message = "An error occurred while processing your request." });
+        }
+    }
+    
+    /// <summary>
+    /// Debug endpoint to get all items.
+    /// This is for testing purposes and should not be used in production.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("items")]
+    [Authorize]
+    public async Task<IActionResult> GetItemsAsync()
+    {
+        try
+        {
+            var items = await this.itemService.GetAllItemsAsync();
+            return Ok(items);
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "An error occurred while getting all items.");
             return StatusCode(500, new { Message = "An error occurred while processing your request." });
         }
     }

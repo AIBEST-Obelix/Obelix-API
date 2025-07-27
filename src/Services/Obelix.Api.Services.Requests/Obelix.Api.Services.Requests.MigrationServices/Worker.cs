@@ -56,13 +56,11 @@ public class Worker(
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>
         {
-            // Run migration in a transaction to avoid partial migration if it fails.
-            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            // Entity Framework execution strategies already handle transactions internally
             await dbContext.Database.MigrateAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
         });
     }
-
+    
     private static async Task SeedDataAsync(ApplicationDbContext dbContext,
         IConfiguration configuration, CancellationToken cancellationToken)
     {
