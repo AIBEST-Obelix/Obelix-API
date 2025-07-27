@@ -71,7 +71,7 @@ public class ItemsFileController : ControllerBase
     /// <param name="id">Item file id</param>
     /// <streams>Item file contents</streams>
     [HttpGet("{id}")]
-    [Authorize]
+    [AllowAnonymous]
     public async Task<IActionResult> GetItemFileById(string id)
     {
         this.logger.LogInformation("User {UserId} is downloading item file {ItemFileId}",
