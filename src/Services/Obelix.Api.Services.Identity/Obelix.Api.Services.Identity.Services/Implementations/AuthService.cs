@@ -29,15 +29,15 @@ internal class AuthService : IAuthService
     }
     
     /// <inheritdoc/>
-    public async Task<bool> CheckIfUserExistsAsync(string username)
+    public async Task<bool> CheckIfUserExistsAsync(string email)
     {
-        return await this.userManager.FindByNameAsync(username) != null;
+        return await this.userManager.FindByNameAsync(email) != null;
     }
 
     /// <inheritdoc/>
-    public async Task<bool> CheckIsPasswordCorrectAsync(string username, string password)
+    public async Task<bool> CheckIsPasswordCorrectAsync(string email, string password)
     {
-        var user = await this.userManager.FindByNameAsync(username);
+        var user = await this.userManager.FindByEmailAsync(email);
 
         return !(user is null || !await this.userManager.CheckPasswordAsync(user, password));
     }
@@ -48,6 +48,9 @@ internal class AuthService : IAuthService
         {
             SecurityStamp = Guid.NewGuid().ToString(),
             UserName = userIm.Email,
+            Email = userIm.Email,
+            FirstName = userIm.FirstName,
+            LastName = userIm.LastName
         };
 
         var result = await this.userManager.CreateAsync(user, userIm.Password);
@@ -77,7 +80,9 @@ internal class AuthService : IAuthService
         {
             SecurityStamp = Guid.NewGuid().ToString(),
             UserName = userIm.Email,
-            Email = userIm.Email
+            Email = userIm.Email,
+            FirstName = userIm.FirstName,
+            LastName = userIm.LastName
         };
 
         var result = await this.userManager.CreateAsync(admin, userIm.Password);
