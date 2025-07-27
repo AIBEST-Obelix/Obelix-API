@@ -12,8 +12,8 @@ using Obelix.Api.Services.Identity.Data.Data;
 namespace Obelix.Api.Services.Identity.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250711093450_Add first and lastname to users")]
-    partial class Addfirstandlastnametousers
+    [Migration("20250727062754_Remove email from user model")]
+    partial class Removeemailfromusermodel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

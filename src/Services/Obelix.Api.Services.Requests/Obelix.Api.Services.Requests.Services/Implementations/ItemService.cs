@@ -44,4 +44,13 @@ public class ItemService : IItemService
 
         return item?.Id;
     }
+    
+    public async Task<IEnumerable<string>> GetAllItemsAsync()
+    {
+        return await this.context.Items
+            .AsNoTracking()
+            .Where(i => !i.IsDeleted)
+            .Select(i => i.Id)
+            .ToListAsync();
+    }
 }

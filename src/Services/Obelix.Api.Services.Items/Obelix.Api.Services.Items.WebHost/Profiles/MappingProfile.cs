@@ -16,6 +16,7 @@ public class MappingProfile : Profile
     {
         this.CreateMap<Item, ItemVM>();
         this.CreateMap<Item, ItemIM>();
+        this.CreateMap<ItemIM, Item>();
         this.CreateMap<ItemIM, ItemVM>();
     }
 }
