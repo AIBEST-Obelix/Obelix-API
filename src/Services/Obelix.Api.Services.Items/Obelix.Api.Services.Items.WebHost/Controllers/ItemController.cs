@@ -50,7 +50,7 @@ public class ItemsController : ControllerBase
     
     /// <summary>
     /// Gets an item by its ID.
-    /// /// </summary>
+    /// </summary>
     /// <param name="id">The ID of the item.</param>
     /// <returns>The item with the specified ID.</returns>
     [HttpGet("{id}")]
@@ -127,6 +127,8 @@ public class ItemsController : ControllerBase
                 try
                 {
                     var result = await itemService.AnalyzeItemAsync(files);
+
+                    this.logger.LogInformation($"Analyzed item: {result}");
 
                     var @event = new ItemCreatedIntegrationEvent(
                         itemId.Id,

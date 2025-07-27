@@ -1,6 +1,20 @@
 using Obelix.Api.Aspire.AppHost.Extension;
+using Obelix.Api.Aspire.AppHost.Helpers;
+
+#pragma warning disable ASPIREHOSTINGPYTHON001
 
 var builder = DistributedApplication.CreateBuilder(args);
+
+bool pythonInited = false;
+try
+{
+    await PythonInit.SetupPythonEnvironmentAsync();
+    pythonInited = true;
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Python environment setup failed: {ex.Message}");
+}
 
 var rabbitMqUsername = builder.AddParameter("database-username");
 var rabbitMqPassword = builder.AddParameter("database-password", secret: true);
@@ -57,6 +71,7 @@ var itemsService = builder
 
 var requestsService = builder
     .AddProject<Projects.Obelix_Api_Services_Requests_WebHost>("requests-service")
+    .WithReference(requestsDb)
     .WithReference(identityService)
     .WithReference(itemsService)
     .WithReference(rabbitMq)
@@ -64,9 +79,31 @@ var requestsService = builder
     .WithExternalHttpEndpoints()
     .WaitFor(requestsMigrationService);
 
-builder
-    .AddProject<Projects.Obelix_Api_Gateway_WebHost>("api-gateway")
-    .WithReference(identityService)
-    .WithReference(itemsService);
+if (!pythonInited)
+{
+    Console.WriteLine("Python environment is not initialized, skipping Python services.");
+    
+    builder
+        .AddProject<Projects.Obelix_Api_Gateway_WebHost>("api-gateway")
+        .WithReference(identityService)
+        .WithReference(itemsService)
+        .WithReference(requestsService);
+}
+else
+{
+    var analyzeService = builder
+        .AddPythonApp("analyze-service", "../../Services/Obelix.Api.Services.Analyze", "main.py")
+        .WithHttpEndpoint(targetPort: 8111, port: 8111, isProxied: false)
+        .WithExternalHttpEndpoints()
+        .WithOtlpExporter()
+        .WithReference(rabbitMq);
+
+    builder
+        .AddProject<Projects.Obelix_Api_Gateway_WebHost>("api-gateway")
+        .WithReference(identityService)
+        .WithReference(itemsService)
+        .WithReference(requestsService)
+        .WithReference(analyzeService);
+}
 
 builder.Build().Run();
