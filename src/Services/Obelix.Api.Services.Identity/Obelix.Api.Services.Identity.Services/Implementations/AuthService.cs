@@ -49,6 +49,8 @@ internal class AuthService : IAuthService
             SecurityStamp = Guid.NewGuid().ToString(),
             UserName = userIm.Email,
             Email = userIm.Email,
+            FirstName = userIm.FirstName,
+            LastName = userIm.LastName
         };
 
         var result = await this.userManager.CreateAsync(user, userIm.Password);
