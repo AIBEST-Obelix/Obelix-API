@@ -18,43 +18,21 @@ public class RequestController : ControllerBase
 {
     private readonly ILogger<RequestController> logger;
     private readonly IRequestService requestService;
-<<<<<<< Updated upstream
-    private readonly IItemService itemService;
-=======
-<<<<<<< Updated upstream
-=======
     private readonly IItemService itemService;
     private readonly ICurrentUser currentUser;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-
     /// <summary>
     /// Initializes a new instance of the <see cref="RequestController"/> class.
     /// </summary>
     public RequestController(
         IRequestService requestService,
-<<<<<<< Updated upstream
-        IItemService itemService,
-=======
-<<<<<<< Updated upstream
-=======
         IItemService itemService,
         ICurrentUser currentUser,
->>>>>>> Stashed changes
->>>>>>> Stashed changes
         ILogger<RequestController> logger)
     {
         this.requestService = requestService;
         this.logger = logger;
-<<<<<<< Updated upstream
-        this.itemService = itemService;
-=======
-<<<<<<< Updated upstream
-=======
         this.itemService = itemService;
         this.currentUser = currentUser;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
     }
 
     /// <summary>

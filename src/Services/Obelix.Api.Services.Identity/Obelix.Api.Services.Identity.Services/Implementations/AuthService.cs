@@ -16,18 +16,18 @@ internal class AuthService : IAuthService
 {
     private readonly UserManager<User> userManager;
     private readonly RoleManager<IdentityRole> roleManager;
-    private readonly IIntegrationEventService integrationEventService;
+    private readonly IIntegrationEventService? integrationEventService;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AuthService"/> class.
     /// </summary>
     /// <param name="userManager">User manager.</param>
     /// <param name="roleManager">Role manager.</param>
-    /// <param name="integrationEventService">Integration event service.</param>
+    /// <param name="integrationEventService">Integration event service (optional).</param>
     public AuthService(
         UserManager<User> userManager,
         RoleManager<IdentityRole> roleManager,
-        IIntegrationEventService integrationEventService)
+        IIntegrationEventService? integrationEventService = null)
     {
         this.userManager = userManager;
         this.roleManager = roleManager;
@@ -76,13 +76,16 @@ internal class AuthService : IAuthService
             await this.userManager.AddToRoleAsync(user, UserRoles.User);
         }
 
-        // Publish UserCreatedIntegrationEvent
-        var userCreatedEvent = new UserCreatedIntegrationEvent(
-            user.Id,
-            user.FirstName,
-            user.LastName
-        );
-        await this.integrationEventService.PublishThroughEventBusAsync(userCreatedEvent);
+        // Publish UserCreatedIntegrationEvent if service is available
+        if (this.integrationEventService != null)
+        {
+            var userCreatedEvent = new UserCreatedIntegrationEvent(
+                user.Id,
+                user.FirstName,
+                user.LastName
+            );
+            await this.integrationEventService.PublishThroughEventBusAsync(userCreatedEvent);
+        }
 
         return new (true, null);
     }
@@ -116,13 +119,16 @@ internal class AuthService : IAuthService
             await this.userManager.AddToRoleAsync(admin, UserRoles.Admin);
         }
 
-        // Publish UserCreatedIntegrationEvent
-        var userCreatedEvent = new UserCreatedIntegrationEvent(
-            admin.Id,
-            admin.FirstName,
-            admin.LastName
-        );
-        await this.integrationEventService.PublishThroughEventBusAsync(userCreatedEvent);
+        // Publish UserCreatedIntegrationEvent if service is available
+        if (this.integrationEventService != null)
+        {
+            var userCreatedEvent = new UserCreatedIntegrationEvent(
+                admin.Id,
+                admin.FirstName,
+                admin.LastName
+            );
+            await this.integrationEventService.PublishThroughEventBusAsync(userCreatedEvent);
+        }
 
         return new(true, null);
     }
