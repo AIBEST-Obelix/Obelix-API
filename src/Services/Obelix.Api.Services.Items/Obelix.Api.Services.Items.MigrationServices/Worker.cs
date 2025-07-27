@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Obelix.Api.Services.Items.Data.Data;
 using OpenTelemetry.Trace;
 
-namespace Obelix.Api.Services.Identity.MigrationServices;
+namespace Obelix.Api.Services.Items.MigrationServices;
 
 public class Worker(
     IServiceProvider serviceProvider,

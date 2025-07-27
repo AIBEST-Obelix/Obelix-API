@@ -6,9 +6,9 @@ using Obelix.Api.Services.Shared.Data.Interceptors;
 using Obelix.Api.Services.Shared.Data.Models.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Obelix.Api.Services.Identity.WebHost.Profiles;
+using Obelix.Api.Services.Items.WebHost.Profiles;
 using Obelix.Api.Services.Items.WebHost.Hubs;
-using Obelix.Api.Services.Metadata.WebHost.SwaggerConfiguration;
+using Obelix.Api.Services.Items.WebHost.SwaggerConfiguration;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;

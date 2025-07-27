@@ -25,9 +25,6 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
     /// <param name="builder">Model Builder.</param>
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        /*builder.Entity<Company>()
-            .HasQueryFilter(x => x.IsDeleted == false);*/
-        
         base.OnModelCreating(builder);
     }
 }
