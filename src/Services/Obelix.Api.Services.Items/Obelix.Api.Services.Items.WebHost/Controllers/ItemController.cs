@@ -92,17 +92,12 @@ public class ItemsController : ControllerBase
     /// <returns>The created item.</returns>
     [HttpPost]
     [Authorize(Policy = UserPolicies.AdminPermissions)]
-    public async Task<IActionResult> CreateItemAsync([FromBody] ItemAnalyzeIM itemAnalyzeIM)
+    public async Task<IActionResult> CreateItemAsync(List<IFormFile> files)
     {
-        if (itemAnalyzeIM.Files.Count == 0)
+        if (files.Count == 0)
             return BadRequest("No files uploaded.");
-        if (itemAnalyzeIM.Files.Count > 3)
+        if (files.Count > 3)
             return BadRequest("Too many files uploaded. Please upload a maximum of 3 files.");
-        
-        if (itemAnalyzeIM == null)
-        {
-            return BadRequest(new { Message = "Item data is required." });
-        }
 
         try
         {
@@ -116,7 +111,7 @@ public class ItemsController : ControllerBase
             
             var key = Encoding.UTF8.GetBytes(this.AESKey);
             
-            foreach (var file in itemAnalyzeIM.Files)
+            foreach (var file in files)
             {
                 await this.itemFileService.CreateItemFileAsync(file, key, itemId.Id);
             }
@@ -126,7 +121,19 @@ public class ItemsController : ControllerBase
                 try
                 {
                     
+<<<<<<< Updated upstream
                     var result = await itemService.AnalyzeItemAsync(itemAnalyzeIM.Files);
+=======
+                    var result = await itemService.AnalyzeItemAsync(files);
+
+                    var @event = new ItemCreatedIntegrationEvent(
+                        itemId.Id,
+                        result.Name,
+                        false
+                    );
+
+                    await this.eventService.PublishThroughEventBusAsync(@event);
+>>>>>>> Stashed changes
                     
                     await this.itemService.UpdateItemAsync(new ItemIM
                     {
