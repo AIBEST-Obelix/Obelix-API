@@ -360,4 +360,30 @@ public class RequestService : IRequestService
 
         return await this.GetRequestsByUserIdAsync(this.currentUser.UserId);
     }
+
+    /// <inheritdoc />
+    public async Task<Dictionary<string, int>> GetRequestCountByMonthAsync(int year)
+    {
+        var monthNames = new[] 
+        {
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
+
+        var requestCounts = new Dictionary<string, int>();
+
+        for (int month = 1; month <= 12; month++)
+        {
+            var startDate = new DateTime(year, month, 1, 0, 0, 0, DateTimeKind.Utc);
+            var endDate = startDate.AddMonths(1);
+
+            var count = await this.context.Requests
+                .Where(r => !r.IsDeleted && r.CreatedAt >= startDate && r.CreatedAt < endDate)
+                .CountAsync();
+
+            requestCounts[monthNames[month - 1]] = count;
+        }
+
+        return requestCounts;
+    }
 }
