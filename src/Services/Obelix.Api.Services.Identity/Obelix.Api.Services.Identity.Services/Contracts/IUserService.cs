@@ -89,4 +89,11 @@ public interface IUserService
     /// <param name="id">Id of the user.</param>
     /// <returns>Role of the use.</returns>
     Task<List<string>> GetUserRolesByIdAsync(string id);
+
+    /// <summary>
+    /// Gets user count by month for analytics.
+    /// </summary>
+    /// <param name="year">Year to get analytics for.</param>
+    /// <returns>Dictionary with month names as keys and user counts as values.</returns>
+    Task<Dictionary<string, int>> GetUserCountByMonthAsync(int year);
 }

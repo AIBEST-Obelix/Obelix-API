@@ -235,4 +235,22 @@ public class UserController : ControllerBase
         });
     }
 
+    /// <summary>
+    /// Gets user count by month for analytics chart.
+    /// </summary>
+    /// <param name="year">Year to get analytics for (optional, defaults to current year).</param>
+    /// <returns>Dictionary with month names as keys and user counts as values.</returns>
+    [HttpGet("analytics/monthly-count")]
+    [Authorize(Policy = UserPolicies.AdminPermissions)]
+    public async Task<ActionResult<Dictionary<string, int>>> GetUserCountByMonthAsync([FromQuery] int? year = null)
+    {
+        var targetYear = year ?? DateTime.UtcNow.Year;
+        
+        this.logger.LogInformation("Getting user count by month for year {Year}", targetYear);
+
+        var result = await this.userService.GetUserCountByMonthAsync(targetYear);
+
+        return this.Ok(result);
+    }
+
 }

@@ -175,4 +175,30 @@ public class ItemService : IItemService
         return analyzeResult;
 
     }
+
+    /// <inheritdoc />
+    public async Task<Dictionary<string, int>> GetItemCountByMonthAsync(int year)
+    {
+        var monthNames = new[] 
+        {
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
+
+        var itemCounts = new Dictionary<string, int>();
+
+        for (int month = 1; month <= 12; month++)
+        {
+            var startDate = new DateTime(year, month, 1, 0, 0, 0, DateTimeKind.Utc);
+            var endDate = startDate.AddMonths(1);
+
+            var count = await this.context.Items
+                .Where(i => !i.IsDeleted && i.CreatedAt >= startDate && i.CreatedAt < endDate)
+                .CountAsync();
+
+            itemCounts[monthNames[month - 1]] = count;
+        }
+
+        return itemCounts;
+    }
 }

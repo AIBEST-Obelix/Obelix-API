@@ -55,4 +55,11 @@ public interface IItemService
     /// <param name="files">Files to analyze.</param>
     /// <returns>Analyzed item input model.</returns>
     Task<ItemIM> AnalyzeItemAsync(List<IFormFile> files);
+
+    /// <summary>
+    /// Gets item count by month for analytics.
+    /// </summary>
+    /// <param name="year">Year to get analytics for.</param>
+    /// <returns>Dictionary with month names as keys and item counts as values.</returns>
+    Task<Dictionary<string, int>> GetItemCountByMonthAsync(int year);
 }

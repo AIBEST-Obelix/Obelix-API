@@ -88,4 +88,11 @@ public interface IRequestService
     /// </summary>
     /// <returns>List of requests for the current user.</returns>
     Task<IEnumerable<RequestVM>> GetMyRequestsAsync();
+
+    /// <summary>
+    /// Gets request count by month for analytics.
+    /// </summary>
+    /// <param name="year">Year to get analytics for.</param>
+    /// <returns>Dictionary with month names as keys and request counts as values.</returns>
+    Task<Dictionary<string, int>> GetRequestCountByMonthAsync(int year);
 }
