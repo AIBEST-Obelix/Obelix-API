@@ -29,7 +29,7 @@ public class UserIM
     /// </summary>    
     
     [Required]
-    [StringLength(40, ErrorMessage = "Last name must be less than 40 characters and at least 4 characters long.", MinimumLength = 4)]
+    [StringLength(40, ErrorMessage = "Last name must be less than 40 characters and at least 4 characters long.", MinimumLength = 2)]
     [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "First name must contain only letters")]
     [Display(Name = "First Name")]
     public string FirstName { get; set; } = string.Empty;
@@ -38,7 +38,7 @@ public class UserIM
     /// Gets or sets the last name of the User.
     /// </summary>
     [Required]
-    [StringLength(40, ErrorMessage = "Last name must be less than 40 characters and at least 4 characters long.", MinimumLength = 4)]
+    [StringLength(40, ErrorMessage = "Last name must be less than 40 characters and at least 4 characters long.", MinimumLength = 2)]
     [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "Last name must contain only letters")]
     [Display(Name = "Last Name")]
     public string LastName { get; set; } = string.Empty;

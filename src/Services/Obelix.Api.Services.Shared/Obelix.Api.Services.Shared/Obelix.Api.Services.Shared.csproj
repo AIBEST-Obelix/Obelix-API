@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="IntegrationEvent\" />
+      <ProjectReference Include="..\..\..\EventBus\Obelix.Api.EventBus.Abstraction\Obelix.Api.EventBus.Abstraction.csproj" />
     </ItemGroup>
 
 </Project>

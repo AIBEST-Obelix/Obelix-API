@@ -71,7 +71,7 @@ public class ItemsFileController : ControllerBase
     /// <param name="id">Item file id</param>
     /// <streams>Item file contents</streams>
     [HttpGet("{id}")]
-    [Authorize]
+    [AllowAnonymous]
     public async Task<IActionResult> GetItemFileById(string id)
     {
         this.logger.LogInformation("User {UserId} is downloading item file {ItemFileId}",
@@ -99,10 +99,10 @@ public class ItemsFileController : ControllerBase
     }
 
     /// <summary>
-    /// Gets all item files for aн item
+    /// Gets all item files for an item
     /// </summary>
     /// <param name="itemId">Item id</param>
-    /// <returns>All item files for аa item</returns>
+    /// <returns>All item files for аn item</returns>
     [HttpGet("item/{itemId}")]
     [Authorize]
     public async Task<IActionResult> GetItemFilesByItemId(string itemId)

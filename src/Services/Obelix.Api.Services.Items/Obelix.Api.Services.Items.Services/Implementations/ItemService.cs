@@ -48,6 +48,7 @@ public class ItemService : IItemService
     {
         var items = await this.context.Items
             .AsNoTracking()
+            .Where(i => !i.IsDeleted)
             .ToListAsync();
         
         return this.mapper.Map<List<ItemVM>>(items);

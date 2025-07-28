@@ -8,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Obelix.Api.Services.Items.Data.Data;
 using OpenTelemetry.Trace;
 
-namespace Obelix.Api.Services.Identity.MigrationServices;
+namespace Obelix.Api.Services.Items.MigrationServices;
 
 public class Worker(
     IServiceProvider serviceProvider,
@@ -56,10 +56,8 @@ public class Worker(
         var strategy = dbContext.Database.CreateExecutionStrategy();
         await strategy.ExecuteAsync(async () =>
         {
-            // Run migration in a transaction to avoid partial migration if it fails.
-            await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+            // Entity Framework execution strategies already handle transactions internally
             await dbContext.Database.MigrateAsync(cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
         });
     }
 

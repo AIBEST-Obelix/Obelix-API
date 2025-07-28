@@ -1,6 +1,7 @@
 using Obelix.Api.Services.Items.Services.Contracts;
 using Obelix.Api.Services.Items.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
+using Obelix.Api.Services.Items.Data.Models;
 
 namespace Obelix.Api.Services.Items.Services;
 
@@ -17,6 +18,10 @@ public static class DependencyInjection
     public static void AddServices(this IServiceCollection services)
     {
         services
-            .AddScoped<IItemService, ItemService>();
+            .AddScoped<IItemService, ItemService>()
+            .AddScoped<IFileService, FileService>()
+            .AddScoped<IEncryptionService, EncryptionService>()
+            .AddScoped<ICurrentUser, CurrentUser>()
+            .AddScoped<IItemFileService, ItemFileService>();
     }
 }

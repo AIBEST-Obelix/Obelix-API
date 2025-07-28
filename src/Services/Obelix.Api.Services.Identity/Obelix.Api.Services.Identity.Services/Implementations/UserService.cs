@@ -74,16 +74,55 @@ internal class UserService : IUserService
         {
             return false;
         }
+
+        if (user.Email != newUserInfo.Email)
+        {
+            var normalizedEmail = this.userManager.NormalizeEmail(newUserInfo.Email);
+            var normalizedUsername = this.userManager.NormalizeName(newUserInfo.Email);
+            
+            var existingUser = await this.userManager.FindByEmailAsync(normalizedEmail);
+            if (existingUser != null && existingUser.Id != user.Id)
+            {
+                return false;
+            }
+
+            var existingUserByName = await this.userManager.FindByNameAsync(normalizedUsername);
+            if (existingUserByName != null && existingUserByName.Id != user.Id)
+            {
+                return false;
+            }
+        }
         
-        user.UserName = newUserInfo.UserName;
+        user.Email = newUserInfo.Email;
+        user.FirstName = newUserInfo.FirstName;
+        user.LastName = newUserInfo.LastName;
+        user.UserName = newUserInfo.Email;
 
         if (!string.IsNullOrEmpty(newUserInfo.Password))
         {
-            await this.ChangePasswordAsync(user.Id, newUserInfo.Password);
+            var passwordResult = await this.ChangePasswordAsync(user.Id, newUserInfo.Password);
+            if (!passwordResult.Succeeded)
+            {
+                return false;
+            }
         }
 
-        await this.userManager.UpdateAsync(user);
-        return true;
+        try
+        {
+            var result = await this.userManager.UpdateAsync(user);
+            return result.Succeeded;
+        }
+        catch (DbUpdateException ex) when (ex.InnerException is Npgsql.PostgresException pgEx && pgEx.SqlState == "23505")
+        {
+            // handle unique constraint violation specifically
+            if (pgEx.ConstraintName == "UserNameIndex")
+            {
+                // username/email already exists
+                return false;
+            }
+            // re-throw if it's a different constraint violation
+            throw;
+        }
     }
 
     /// <inheritdoc/>
@@ -119,13 +158,24 @@ internal class UserService : IUserService
     //// <inheritdoc/>
     public async Task<IdentityResult> DeleteUserAsync(string id)
     {
-        var rts = await this.context.RefreshTokens.Where(rt => rt.UserId == id).ToListAsync();
-
-        context.RemoveRange(rts);
+        var user = await this.userManager.FindByIdAsync(id);
+        if (user is null)
+        {
+            return IdentityResult.Failed(new IdentityError { Description = "User not found." });
+        }
+        
+        var userRoles = await this.userManager.GetRolesAsync(user);
+        if (userRoles.Any())
+        {
+            var removeRolesResult = await this.userManager.RemoveFromRolesAsync(user, userRoles);
+            if (!removeRolesResult.Succeeded)
+            {
+                return removeRolesResult;
+            }
+        }
+        this.context.Users.Remove(user);
 
         await context.SaveChangesAsync();
-        
-        var user = await this.userManager.FindByIdAsync(id);
         
         return await this.userManager.DeleteAsync(user!);
     }

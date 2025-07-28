@@ -24,4 +24,9 @@ public class ItemVM
     /// Gets or sets the item serial number.
     /// </summary>
     public string SerialNumber { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// Gets or sets the creation date of the item.
+    /// </summary>
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

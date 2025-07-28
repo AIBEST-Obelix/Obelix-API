@@ -1,7 +1,7 @@
 using System.Reflection;
 using Microsoft.OpenApi.Models;
 
-namespace Obelix.Api.Services.Metadata.WebHost.SwaggerConfiguration;
+namespace Obelix.Api.Services.Items.WebHost.SwaggerConfiguration;
 
 
 /// <summary>
