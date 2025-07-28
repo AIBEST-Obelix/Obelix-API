@@ -227,4 +227,29 @@ public class ItemsController : ControllerBase
             return StatusCode(500, new { Message = "An error occurred while processing your request." });
         }
     }
+
+    /// <summary>
+    /// Gets item count by month for analytics chart.
+    /// </summary>
+    /// <param name="year">Year to get analytics for (optional, defaults to current year).</param>
+    /// <returns>Dictionary with month names as keys and item counts as values.</returns>
+    [HttpGet("analytics/monthly-count")]
+    [Authorize(Policy = UserPolicies.AdminPermissions)]
+    public async Task<ActionResult<Dictionary<string, int>>> GetItemCountByMonthAsync([FromQuery] int? year = null)
+    {
+        var targetYear = year ?? DateTime.UtcNow.Year;
+        
+        this.logger.LogInformation("Getting item count by month for year {Year}", targetYear);
+
+        try
+        {
+            var result = await this.itemService.GetItemCountByMonthAsync(targetYear);
+            return this.Ok(result);
+        }
+        catch (Exception ex)
+        {
+            this.logger.LogError(ex, "An error occurred while getting item analytics for year {Year}", targetYear);
+            return StatusCode(500, new { Message = "An error occurred while processing your request." });
+        }
+    }
 }

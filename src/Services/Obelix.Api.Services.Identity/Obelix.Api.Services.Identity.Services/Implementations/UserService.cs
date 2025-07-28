@@ -192,4 +192,30 @@ internal class UserService : IUserService
 
         return (await this.userManager.GetRolesAsync(admin)).ToList();
     }
+
+    /// <inheritdoc/>
+    public async Task<Dictionary<string, int>> GetUserCountByMonthAsync(int year)
+    {
+        var monthNames = new[] 
+        {
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+        };
+
+        var userCounts = new Dictionary<string, int>();
+
+        for (int month = 1; month <= 12; month++)
+        {
+            var startDate = new DateTime(year, month, 1, 0, 0, 0, DateTimeKind.Utc);
+            var endDate = startDate.AddMonths(1);
+
+            var count = await this.context.Users
+                .Where(u => !u.IsDeleted && u.CreatedAt >= startDate && u.CreatedAt < endDate)
+                .CountAsync();
+
+            userCounts[monthNames[month - 1]] = count;
+        }
+
+        return userCounts;
+    }
 }

@@ -27,6 +27,11 @@ public class User : IdentityUser, ISoftDelete
     [MaxLength(100)]
     public string LastName { get; set; }
 
+    /// <summary>
+    /// Gets or sets the date and time when the user was created.
+    /// </summary>
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
     // Email come to IdentityUser:
     // public string Email { get; set; }
 }

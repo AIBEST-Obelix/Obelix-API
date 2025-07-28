@@ -12,8 +12,8 @@ using Obelix.Api.Services.Identity.Data.Data;
 namespace Obelix.Api.Services.Identity.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250727062754_Remove email from user model")]
-    partial class Removeemailfromusermodel
+    [Migration("20250728044550_Add createdat to user")]
+    partial class Addcreatedattouser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -190,6 +190,9 @@ namespace Obelix.Api.Services.Identity.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
